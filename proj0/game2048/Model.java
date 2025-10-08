@@ -114,9 +114,45 @@ public class Model extends Observable {
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
 
+        Board b = this.board;
+        b.setViewingPerspective(side);
+        for(int i=0;i<b.size();i++){
+            if(colMerge(i)) changed=true;
+        }
+        b.setViewingPerspective(Side.NORTH);
         checkGameOver();
         if (changed) {
             setChanged();
+        }
+        return changed;
+    }
+
+    private boolean colMerge(int column){
+        boolean changed=false;
+        Board b=this.board;
+        Tile pre = b.tile(column,b.size()-1);
+        int preRow=b.size()-1;
+        int i=b.size()-2;
+        while(i>=0){
+            Tile cur=b.tile(column,i);
+            //current tile非空
+            if(cur!=null){
+                if(pre==null||pre.value()==cur.value()){
+                    boolean move=b.move(column, preRow, cur);
+                    changed=true;
+                    i--;
+                    if(!move){
+                        pre = b.tile(column, preRow);
+                        continue;
+                    }
+                    else score+=cur.value()*2;
+                }
+                pre = b.tile(column, preRow-1);
+                preRow-=1;
+                continue;
+            }
+            //current tile为空则向下看一个
+            i--;
         }
         return changed;
     }
