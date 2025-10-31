@@ -1,6 +1,6 @@
 package timingtest;
 import edu.princeton.cs.algs4.Stopwatch;
-import org.checkerframework.checker.units.qual.A;
+//import org.checkerframework.checker.units.qual.A;
 
 /**
  * Created by hug.
@@ -40,8 +40,6 @@ public class TimeSLList {
             }
             Stopwatch sw = new Stopwatch();
             int last = test.getLast();
-            int last1 = test.getLast();
-            int last2 = test.getLast();
             times.addLast(sw.elapsedTime());
         }
         printTimingTable(Ns, times, opCounts);
